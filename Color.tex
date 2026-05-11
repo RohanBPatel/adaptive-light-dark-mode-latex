@@ -1,0 +1,86 @@
+% WIP: https://www.desmos.com/calculator/p8dxo8nwcn
+% https://www.audioeye.com/color-contrast-checker/?utm_adgroup=Color-Contrast-Checker
+% https://pinetools.com/invert-color
+
+\def\wake{8}
+\def\sleep{23}
+\def\contrastradius{0.25}
+\def\yellowhue{60}
+\def\yellowfactor{0.2}
+\def\mypaperhue{83}
+\def\mypapersat{0.053}
+\def\mypaperval{0.969}
+\def\roundingdecimals{4}
+
+\DTMsavenow{now}
+
+\ifdefined\currenthour
+    % Use provided current hour
+\else
+    \def\currenthour{\number\fpeval{round(\DTMfetchhour{now} + \DTMfetchminute{now}/60, 4)}}
+\fi
+
+\providecommand{\lerp}[3]{
+    \fpeval{((1-#3)*#1) + (#3*#2)}
+}
+
+\providecommand{\clampout}[3]{
+    \fpeval{(#1 > (#2 + #3) / 2) ? max(#1, #3) : min(#1, #2)}
+}
+
+\providecommand{\step}[2]{
+    \fpeval{0.5+(0.5-0.5*(1-abs(1-2*#1))^(#2))*sign(2*#1-1)}
+}
+
+\providecommand{\colorweight}[1]{
+    \clampout{
+        \step{
+            \fpeval{
+                0.5 + 0.5 * cos( ( pi * ( #1 - (\sleep - \wake) ) ) / 12 )
+            }
+        }{2.45}
+    }{\fpeval{0.5-\contrastradius}}{\fpeval{0.5+\contrastradius}}
+}
+
+\edef\currentweight{\colorweight{\currenthour}}
+
+\edef\backhue{
+    \lerp{\mypaperhue}{\yellowhue}{\fpeval{\yellowfactor * (\currenthour / 24)}}
+}
+
+\edef\backsat{
+    \lerp{\mypapersat}{1}{\fpeval{\yellowfactor*(1-(abs(\sleep-\currenthour) / 24))^(6)}}
+}
+\edef\backval{
+    \lerp{0.1}{\mypaperval}{\currentweight}
+}
+
+\edef\texthue{
+    \fpeval{\mypaperhue > 180 ? \mypaperhue-180 : \mypaperhue+180}
+}
+\edef\textsat{
+    \fpeval{\mypapersat + (\currentweight / 5)}
+}
+\edef\textval{
+    \step{\lerp{1}{0}{\currentweight}}{2}
+}
+
+\definecolor{documentbackgroundcolor}{hsb}{
+    \fpeval{round(\backhue/360,\roundingdecimals)},
+    \fpeval{round(\backsat,\roundingdecimals)},
+    \fpeval{round(\backval,\roundingdecimals)}
+}
+
+\definecolor{documenttextcolor}{hsb}{
+    \fpeval{round(\texthue/360,\roundingdecimals)},
+    \fpeval{round(\textsat,\roundingdecimals)},
+    \fpeval{round(\textval,\roundingdecimals)}
+}
+
+\providecommand{\setdocumentcolor}{}
+\renewcommand{\setdocumentcolor}{
+    \pagecolor{documentbackgroundcolor}
+    \color{documenttextcolor}
+}
+
+\setdocumentcolor

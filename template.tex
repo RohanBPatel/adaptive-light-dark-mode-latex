@@ -1,0 +1,35 @@
+\documentclass[12pt]{article}
+\usepackage[letterpaper, margin=0.75in]{geometry}
+\usepackage{xcolor}
+\usepackage{xfp}
+\usepackage{datetime2}
+
+\input{./Color.tex}
+
+\begin{document}
+
+\begin{center}
+    \vspace*{2in}
+    {\Huge \textbf{Time Context: \currenthour:00}} \\
+    \vspace{1in}
+    \large
+    This PDF was generated to simulate the document's appearance \\
+    at exactly hour \textbf{\currenthour} of the day.
+\end{center}
+
+\newpage
+\section*{Technical Details}
+\begin{itemize}
+    \item \textbf{Current Weight:}
+    \fpeval{round(\currentweight, 4)}
+    \item \textbf{Background (hsv):}
+    \fpeval{round(\backhue/360, 4)},
+    \fpeval{round(\backsat, 4)},
+    \fpeval{round(\backval, 4)}
+    \item \textbf{Text (hsv):}
+    \fpeval{round(\texthue/360, 4)},
+    \fpeval{round(\textsat, 4)},
+    \fpeval{round(\textval, 4)}
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,49 @@
+\documentclass[12pt]{article}
+\usepackage[letterpaper]{geometry}
+\usepackage{xcolor} % color definitions, https://mirrors.rit.edu/CTAN/macros/latex/contrib/xcolor/xcolor.pdf
+\usepackage{xfp} % floating point evaluations, https://ctan.math.washington.edu/tex-archive/macros/latex/contrib/l3packages/xfp.pdf
+\usepackage{datetime2} % fetching current compilation time, https://mirror.math.princeton.edu/pub/CTAN/macros/latex/contrib/datetime2/datetime2.pdf
+
+\setlength\parindent{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\input{./Color.tex} % path to Color.tex file on your machine
+
+Time: \DTMfetchhour{now}:\DTMfetchminute{now}
+
+Current Hour: \currenthour
+
+Current Weight: \fpeval{round(\currentweight, 4)}
+
+Background Color (hsv) Normalized and Rounded (0-1,0-1,0-1): 
+\fpeval{round(\backhue/360,\roundingdecimals)},
+\fpeval{round(\backsat,\roundingdecimals)},
+\fpeval{round(\backval,\roundingdecimals)}
+
+Text Color (hsv) Normalized and Rounded (0-1,0-1,0-1): 
+\fpeval{round(\texthue/360,\roundingdecimals)},
+\fpeval{round(\textsat,\roundingdecimals)},
+\fpeval{round(\textval,\roundingdecimals)}
+
+\colorbox{documenttextcolor}{\textcolor{documentbackgroundcolor}{You can use the calculated colors directly like this.}}
+
+More on next page!
+
+\newpage
+
+\def\currenthour{21}
+\input{./Color.tex}
+
+You can also manually set \verb|\currenthour| to keep a specific color profile.
+
+This page uses \verb|\def\currenthour{21}| then \verb|\input{./Color.tex}|
+
+Current Hour: \currenthour
+
+Current Weight: \fpeval{round(\currentweight, 4)}
+
+Have fun!
+
+\end{document}
