@@ -1,0 +1,27 @@
+\documentclass[5pt]{article}
+\usepackage[paperwidth=35mm,paperheight=20mm,margin=2mm]{geometry}
+\usepackage{xcolor} % color definitions, https://mirrors.rit.edu/CTAN/macros/latex/contrib/xcolor/xcolor.pdf
+\usepackage{xfp} % floating point evaluations, https://ctan.math.washington.edu/tex-archive/macros/latex/contrib/l3packages/xfp.pdf
+\usepackage{datetime2} % fetching current compilation time, https://mirror.math.princeton.edu/pub/CTAN/macros/latex/contrib/datetime2/datetime2.pdf
+\usepackage{pgffor} % \foreach
+
+\setlength\parindent{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\foreach \h in {0,...,23}{
+    \newpage
+
+    \centering
+    \vspace*{\fill}
+
+    \def\currenthour{\h}
+    \input{./Color.tex}
+    
+    \textbf{Time Context: \currenthour:00}
+    
+    \vspace{\fill}
+}
+
+\end{document}
