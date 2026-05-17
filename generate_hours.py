@@ -30,4 +30,4 @@ def compile_pdf(hour):
 
 if __name__ == "__main__":
     with ThreadPoolExecutor() as executor:
-        executor.map(compile_pdf, range(24))
+        executor.map(compile_pdf, range(25))
