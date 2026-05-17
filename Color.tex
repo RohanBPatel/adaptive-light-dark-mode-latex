@@ -1,15 +1,17 @@
-% WIP: https://www.desmos.com/calculator/p8dxo8nwcn
-% https://www.audioeye.com/color-contrast-checker/?utm_adgroup=Color-Contrast-Checker
-% https://pinetools.com/invert-color
+% Parameter Guide: https://www.desmos.com/calculator/spybafvetz
 
+% Parameters
 \def\wake{8}
-\def\sleep{23}
-\def\contrastradius{0.25}
-\def\yellowhue{60}
+\def\sleep{21}
+\def\contrastradius{0.2}
 \def\yellowfactor{0.2}
 \def\mypaperhue{83}
 \def\mypapersat{0.053}
 \def\mypaperval{0.969}
+
+% Meta Parameters
+\def\yellowhue{60}
+\def\kstep{2.4}
 \def\roundingdecimals{4}
 
 \DTMsavenow{now}
@@ -36,9 +38,9 @@
     \clampout{
         \step{
             \fpeval{
-                0.5 + 0.5 * cos( ( pi * ( #1 - (\sleep - \wake) ) ) / 12 )
+                0.5 + 0.5 * cos( pi * ( ( ( #1 - \wake ) / (\sleep - \wake) ) - 0.5) )
             }
-        }{2.45}
+        }{\kstep}
     }{\fpeval{0.5-\contrastradius}}{\fpeval{0.5+\contrastradius}}
 }
 
