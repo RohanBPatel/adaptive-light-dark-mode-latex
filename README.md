@@ -1,6 +1,6 @@
 # Adaptive Light/Dark Mode for LaTeX
 
-After spending many hours in VSCode typing up homework assignments, I found the constant white background of default LaTeX documents annoying. I created this system as a simple solution to dynamically adjust document aesthetics for a more reading experience.
+After spending many hours in VSCode typing up homework assignments, I found the constant white background of default LaTeX documents annoying. I created this script as a simple solution to dynamically adjust document aesthetics for a more comfortable experience.
 
 The `Color.tex` script provides a one-line include for LaTeX documents to automatically adjust their background and text colors based on the hour and minute of day. By default, it transitions from light, paper-like tones during the day to high-contrast, warm dark modes at night.
 
