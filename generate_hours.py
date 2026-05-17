@@ -1,4 +1,5 @@
 import subprocess
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 template_script = Path("template.tex")
@@ -28,5 +29,5 @@ def compile_pdf(hour):
         Path(f"{job_name}{ext}").unlink(missing_ok=True)
 
 if __name__ == "__main__":
-    for h in range(24):
-        compile_pdf(h)
+    with ThreadPoolExecutor() as executor:
+        executor.map(compile_pdf, range(24))
